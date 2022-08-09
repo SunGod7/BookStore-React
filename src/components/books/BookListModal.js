@@ -1,3 +1,4 @@
+// import { useState } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import BookForm from '../shared/BookForm';
 
@@ -13,6 +14,7 @@ const BookListModal = (props) => {
     const {
         user,
         msgAlert,
+        booksAlreadyTagged,
         booksToView, 
         heading,
         setShowBookViewModal,
@@ -26,6 +28,9 @@ const BookListModal = (props) => {
         //         else return ()
         //     }
         // }
+        let booksAlreadyTaggedIsbns = booksAlreadyTagged.map(book => book.isbn)
+
+        // console.log('ISBNs of books already tagged: ', booksAlreadyTaggedIsbns)
 
         return booksToView.map((book, i) => {
             let filteredBook = {}
@@ -43,7 +48,19 @@ const BookListModal = (props) => {
                             <Card.Img variant="top" src={book.image} style={{ height: '250px', width: '180px' }} />
                             <Card.Body>
                                 <div style={{ textAlign: 'center', display: 'flex' }}>
-                                {user && book.owner && book.owner._id === user.id ?
+
+                                    {user && book.owner && book.owner === user._id ?
+                                        <BookForm
+                                            user={user}
+                                            msgAlert={msgAlert}
+                                            book={book}
+                                            setUpdateTaggedBooks={setUpdateTaggedBooks}
+                                        />
+                                    :
+                                        null
+                                    }
+
+                                    {!booksAlreadyTaggedIsbns.includes(book.isbn) && user ?
                                         <BookForm
                                             user={user}
                                             msgAlert={msgAlert}
@@ -61,6 +78,7 @@ const BookListModal = (props) => {
                                         >
                                             View
                                     </Button>
+
                                 </div>
                             </Card.Body>
                         </Card>
