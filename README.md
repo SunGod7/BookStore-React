@@ -57,3 +57,5 @@ Credentialed user will get feedback saying their search is invalid if they type 
 
 ##### STRETCH GOALS
 - auto completing search box that provides suggestions as the user input changes
+
+## https://github.com/SunGod7/uni_verse_client
